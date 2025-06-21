@@ -1,0 +1,73 @@
+﻿@using Clinic_reservation_system.ViewModel
+@model AllDoctorVM
+<section class="py-3 filter-bar">
+    <div class="container">
+        <div class="row" style="background-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity)) !important;">
+            <div class="col-12">
+                <form>
+                    <div class="row">
+                        <!-- Doctor Name -->
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" placeholder="Doctor Name " name="Name">
+                        </div>
+                        <!-- Doctor Name -->
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" placeholder="Specialization " name="Specialization">
+                        </div>
+                        <!-- Submit Button -->
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-dark w-100">Filter</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<h1>Book Appointment</h1>
+
+<div class="row">
+    @foreach (var item in Model.Doctors)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img class="card-img" src="~/images/@item.Img" style="width: 100%; height: auto;" alt="Doctor Image">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Name</h5>
+                    <p class="card-text">Specialization: @item.Specialization</p>
+                    <a href="/Home/CompleteAppointment/@item.Id" class="btn btn-dark">Book Now</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="d-flex justify-content-center">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            @if (ViewBag.Currentpage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="/Home/AllDoctor?page=@(ViewBag.Currentpage - 1)">Previous</a>
+                </li>
+            }
+
+            @for (int i = 1; i <= ViewBag.Totalpage; i++)
+            {
+                <li class="page-item @(i == ViewBag.Currentpage ? "active" : "")">
+                    <a class="page-link" href="/Home/AllDoctor?page=@i">@i</a>
+                </li>
+            }
+
+            @if (ViewBag.Currentpage < ViewBag.Totalpage)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="/Home/AllDoctor?page=@(ViewBag.Currentpage + 1)">Next</a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>
+
+
+
